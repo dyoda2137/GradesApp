@@ -12,7 +12,7 @@ namespace GradesApp
         void AddGrade(int grade);
         void AddGrade(string grade);
 
-        event GradeAddedDelegate GradeAdded;
+        event GradeAddedUnder2Delegate GradeUnder2;
 
         Statistics GetStatistics();
 

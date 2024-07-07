@@ -46,6 +46,12 @@
             Console.ReadKey();
         }
 
+        static void OnGradeUnder2(object sender, EventArgs args)
+        {
+            Console.WriteLine("UWAGA !! Uczeń dostał 1. Musimy poinformować rodziców !");
+            Console.WriteLine();
+        }
+
         private static void AddGradesToStudent(bool isInMemory)
         {
 
@@ -54,6 +60,7 @@
             if (!string.IsNullOrEmpty(name) && !string.IsNullOrEmpty(surname))
             {
                 IStudent student = isInMemory ? new StudentInMemory(name, surname) : new StudentInFile(name, surname);
+                student.GradeUnder2 += OnGradeUnder2;
                 EnterGrade(student);
                 student.ShowStatistics();
             }
@@ -62,7 +69,7 @@
                 Console.WriteLine("Imię i nazwisko nie może być puste");
             }
         }
-
+               
         private static string UserInput(string input)
         {
             Console.WriteLine(input);

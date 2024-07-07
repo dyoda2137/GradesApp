@@ -1,11 +1,12 @@
-﻿
+﻿using System;
+
 namespace GradesApp
 {
     public abstract class StudentBase : IStudent
     {
-        public delegate void GradeAddedDelegate(object sender, EventArgs args);
+        public delegate void GradeAddedUnder2Delegate(object sender, EventArgs args);
 
-        public abstract event GradeAddedDelegate GradeAdded;
+        public event GradeAddedUnder2Delegate GradeUnder2;
 
         public StudentBase(string name, string surname)
         {
@@ -17,11 +18,34 @@ namespace GradesApp
         public string Surname { get; private set; }
         public abstract void AddGrade(float grade);
 
-        public abstract void AddGrade(double grade);
+        public void AddGrade(double grade)
+        {
+            float value = (float)grade;
+            this.AddGrade(value);
+        }
 
-        public abstract void AddGrade(int grade);
+        public void AddGrade(int grade)
+        {
+            float value = (float)grade;
+            this.AddGrade(value);
+        }
 
-        public abstract void AddGrade(string grade);
+        public void AddGrade(string grade)
+        {
+            if (float.TryParse(grade, out float result))
+            {
+                this.AddGrade(result);
+            }
+            else if (char.TryParse(grade, out char charResult))
+            {
+                this.AddGrade(charResult);
+            }
+            else
+            {
+                throw new Exception($"Ocena: {grade} jest nieprawidłowa");
+            }
+        }
+                
 
         public abstract void ShowGrades();
 
@@ -43,6 +67,14 @@ namespace GradesApp
             else 
             {
                 Console.WriteLine($"Nie można wyświetlić statystyk dla {Name} {Surname} ponieważ żadna ocena nie została dodana.");
+            }
+        }
+
+        protected void CheckEventGradeUnder2()
+        {
+            if (GradeUnder2  != null)
+            {
+                GradeUnder2(this, new EventArgs());
             }
         }
     }
