@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace GradesApp
+﻿namespace GradesApp
 {
     public abstract class StudentBase : IStudent
     {
